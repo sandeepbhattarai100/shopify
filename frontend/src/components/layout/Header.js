@@ -27,7 +27,7 @@ const Header = () => {
   }
   console.log(showDash);
   return (
-    <div className='w-full h-[80px] bg-white flex items-center justify-between z-10 sticky top-0  border-b'>
+    <div className='w-full h-[80px] bg-white flex items-center justify-between z-10 sticky top-0  border-b shadow-sm mb-2'>
       <Wrapper className='flex justify-between items-center'>
         <Link to='/'>  <div className='text-[28px] font-semibold text-yellow-500 cursor-pointer hover:scale-105'><span>Shopify<span className='text-green-500'>...</span></span></div></Link>
         <div className='flex gap-5 relative '>
