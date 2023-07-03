@@ -66,10 +66,10 @@ const updateCategory = async (req, res) => {
 
 const getAllCategory = async (req, res) => {
     try {
-        const getAll = await Category.find();
+        const category = await Category.find();
         res.status(200).send({
             success: true,
-            getAll
+            category
         })
 
     } catch (error) {

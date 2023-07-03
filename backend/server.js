@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/authRoutes');
 const catRoutes = require('./routes/categoryRoutes');
+const prodRoutes = require('./routes/productRoutes');
 
 
 //dbconnect
@@ -23,12 +24,16 @@ const app = express();
 //middlewares
 
 app.use(express.json());
+
 app.use(morgan("dev"));
-app.use(cors());
+app.use(cors({
+    origin: '*'
+}));
 
 //router
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/category', catRoutes);
+app.use('/api/v1/product', prodRoutes);
 
 
 const port = process.env.PORT || 8080;
