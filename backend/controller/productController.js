@@ -51,7 +51,7 @@ const createProduct = async (req, res) => {
 //getallprod
 const getAllProd = async (req, res) => {
     try {
-        const getAll = await Product.find().populate('category').select('-photo').limit(12).sort({ createdAt: -1 });
+        const getAll = await Product.find({}).populate('category').select('-photo').limit(12).sort({ createdAt: -1 });
         res.status(200).send({
             success: true,
             count: getAll.length,
@@ -112,7 +112,7 @@ const getProdPhoto = async (req, res) => {
 const deleteProduct = async (req, res, next) => {
     try {
 
-        const deleted = await Product.findByIdAndDelete(req.params.id).select('-photo');
+        const deleted = await Product.findByIdAndDelete(req.params.pid).select('-photo');
         res.status(200).send({
             success: true,
             message: "product delete successful "
@@ -126,4 +126,26 @@ const deleteProduct = async (req, res, next) => {
 
     }
 };
-module.exports = { createProduct, getAllProd, getSingleProd, getProdPhoto, deleteProduct };
+
+const productFilter = async (req, res) => {
+    try {
+        const { checked, range } = req.body;
+        let args = {};
+        if (checked.length > 0) args.category = checked;
+        if (range.length) args.price = { $gte: range };
+        const product = await Product.find(args);
+        res.status(200).send({
+            success: true,
+            product
+        })
+
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: "couldnot filter products",
+            error
+        })
+
+    }
+}
+module.exports = { createProduct, getAllProd, getSingleProd, getProdPhoto, deleteProduct, productFilter };
