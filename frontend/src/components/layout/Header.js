@@ -5,12 +5,15 @@ import { useAuth } from '../../context/auth'
 
 
 
+
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useCart } from '../../context/cart'
 
 
 
 
 const Header = () => {
+  const [cartItem] = useCart();
   const [showDash, setShowDash] = useState(false);
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
@@ -25,7 +28,7 @@ const Header = () => {
     navigate('/');
 
   }
-  console.log(showDash);
+
   return (
     <div className='w-full h-[80px] bg-white flex items-center justify-between z-10 sticky top-0  border-b shadow-sm mb-2'>
       <Wrapper className='flex justify-between items-center'>
@@ -53,7 +56,7 @@ const Header = () => {
             )
           }
           <NavLink to='/dashboard/user/cart'> <span className=' cursor-pointer'><span className='relative'><AddShoppingCartIcon />
-            <span className='absolute -top-2 left-3 text-xs bg-red-500 text-white rounded-full h-[18px] w-auto  px-[4px]'>10</span>
+            <span className='absolute -top-2 left-3 text-xs bg-red-500 text-white rounded-full h-[18px] w-auto  px-[4px]'>{cartItem.length}</span>
           </span></span></NavLink>
 
         </div>

@@ -1,6 +1,7 @@
 const express = require('express');
 const { registerController, loginController, test, forgotPassword } = require('../controller/authController');
 const { verifyToken, isAdmin } = require('../middleware/authMiddleware');
+
 const router = express.Router();
 
 router.post('/register', registerController)
@@ -16,7 +17,8 @@ router.get('/admin-auth', verifyToken, isAdmin, (req, res) => {
     res.status(200).send({
         ok: true,
     })
-})
+});
+
 
 
 module.exports = router;

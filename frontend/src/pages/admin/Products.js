@@ -52,7 +52,7 @@ const Products = () => {
     return (
         <Layouts>
             <div className='flex justify-around'>
-                <div className='flex-[0.2] h-full shadow-lg'>
+                <div className='flex-[0.2] h-auto shadow-lg'>
                     <AdminMenu />
                 </div>
                 <div className='flex-[0.8] px-3 max-w-[800px] mx-auto'>

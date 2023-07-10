@@ -36,7 +36,10 @@ const CreateProduct = () => {
       productData.append('photo', data.photo[0]);
       productData.append('category', data.category);
       productData.append('shipping', data.shipping);
-      console.log(data.name)
+      // console.log(productData.entries())
+      for (var pair of productData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+      }
 
       const responseData = await axios.post(
         '/api/v1/product/create-product',
@@ -120,11 +123,11 @@ const CreateProduct = () => {
                   placeholder='Shipping Value'
                   className='p-4 outline-none bg-orange-50 '
                 >
-                  <option value='0' className='text-[22px] text-gray-500'>
+                  <option className='text-[22px] text-gray-500'>
                     Select your option
                   </option>
+                  <option value='0'>No</option>
                   <option value='1'>Yes</option>
-                  <option value='2'>No</option>
                 </select>
                 <button
                   type='submit'

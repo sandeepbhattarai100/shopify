@@ -19,6 +19,7 @@ import User from './pages/admin/User';
 import Analytics from './pages/admin/Analytics';
 import Cart from './pages/user/Cart';
 import Products from './pages/admin/Products';
+import SingleProduct from './pages/SingleProduct';
 
 
 
@@ -28,6 +29,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Homepage />} />
+        <Route path='/product/:slug' element={ <SingleProduct/>} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/about' element={<About />} />
         <Route path='/login' element={<Login />} />
@@ -36,6 +38,7 @@ function App() {
 
         {/* user */}
         <Route path='/dashboard' element={<PrivateRoute />} >
+
 
           <Route path='user' element={<Dashboard />} />
           <Route path='user/cart' element={<Cart />} />

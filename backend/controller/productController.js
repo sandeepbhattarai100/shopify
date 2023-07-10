@@ -70,11 +70,13 @@ const getAllProd = async (req, res) => {
 //getSingleProd
 const getSingleProd = async (req, res) => {
     try {
-        const getSing = await Product.findOne({ slug: req.params.slug }).select('-photo').populate('category');
+        const slug = req.params.slug;
+
+        const product = await Product.find({ slug }).select('-photo').populate('category');
         res.status(200).send({
             success: true,
             message: "product fetch success",
-            getSing
+            product
         })
 
     } catch (error) {
@@ -147,5 +149,54 @@ const productFilter = async (req, res) => {
         })
 
     }
+};
+
+//pagination
+
+const productPagination = async (req, res) => {
+
+
+    try {
+        const perPage = 3;
+        const page = req.params.page ? req.params.page : 1;
+        const getAll = await Product.find({}).select('-photo').skip((page - 1) * perPage).limit(perPage).sort({
+            createdAt: -1
+        });
+        res.status(200).send({
+            success: true,
+            getAll
+        })
+
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            error
+        })
+
+    }
+};
+
+const getRelatedProducts = async (req, res) => {
+    try {
+        const { pid, cid } = req.params;
+
+        const product = await Product.find({
+            category: cid,
+            _id: { $ne: pid },
+        }).select('-photo').limit(3).populate('category');
+        res.status(200).send({
+            success: true,
+            message: "fetch cuccessful",
+            product
+        })
+
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: "cannot fetch the product",
+            error
+        })
+
+    }
 }
-module.exports = { createProduct, getAllProd, getSingleProd, getProdPhoto, deleteProduct, productFilter };
+module.exports = { createProduct, getAllProd, getSingleProd, getProdPhoto, deleteProduct, productFilter, productPagination, getRelatedProducts };
