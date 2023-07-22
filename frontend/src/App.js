@@ -20,6 +20,9 @@ import Analytics from './pages/admin/Analytics';
 import Cart from './pages/user/Cart';
 import Products from './pages/admin/Products';
 import SingleProduct from './pages/SingleProduct';
+import Checkout from './pages/user/Checkout';
+import Orders from './pages/user/Orders';
+import AdminOrders from './pages/admin/AdminOrders';
 
 
 
@@ -29,7 +32,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Homepage />} />
-        <Route path='/product/:slug' element={ <SingleProduct/>} />
+        <Route path='/product/:slug' element={<SingleProduct />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/about' element={<About />} />
         <Route path='/login' element={<Login />} />
@@ -42,6 +45,8 @@ function App() {
 
           <Route path='user' element={<Dashboard />} />
           <Route path='user/cart' element={<Cart />} />
+          <Route path='user/checkout' element={<Checkout />} />
+          <Route path='user/orders' element={<Orders />} />
 
         </Route>
         {/* admin */}
@@ -50,9 +55,11 @@ function App() {
           <Route path='admin/create-product' element={<CreateProduct />}></Route>
           <Route path='admin/create-category' element={<CreateCategory />}></Route>
           <Route path='admin/user' element={<User />}></Route>
+          <Route path='admin/order' element={<AdminOrders />}></Route>
+
 
           <Route path='admin/analytics' element={<Analytics />}></Route>
-          <Route path='admin/products' element={<Products/>}></Route>
+          <Route path='admin/products' element={<Products />}></Route>
         </Route >
         <Route path='*' element={<Error />} />
       </Routes>

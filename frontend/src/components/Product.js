@@ -11,7 +11,7 @@ const Product = ({ p }) => {
     let date = new Date().toLocaleDateString();
 
     return (
-        <div className='hover:scale-105 cursor-pointer flex flex-col gap-2 shadow-md ' key={p._id}>
+        <div className='md:hover:scale-105 cursor-pointer flex flex-col gap-2 shadow-sm hover:bg-slate-50 ' key={p._id}>
             <img src={`/api/v1/product/get-product-photo/${p._id}`} alt='product-img' className='h-[250px] w-full  object-scale-down ' onClick={() => navigate(`/product/${p.slug}`)} />
             <h4 className='font-semibold text-[18px] capitalize text-black mx-1 '>{p.name}</h4>
             <div className='flex justify-between px-1'>

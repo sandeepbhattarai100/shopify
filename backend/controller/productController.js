@@ -3,6 +3,19 @@ const Product = require('../models/productModels');
 const fs = require('fs');
 const formidable = require('formidable');
 const { default: slugify } = require('slugify');
+const Order = require('../models/orderModels');
+const dotenv = require('dotenv').config();
+const braintree = require("braintree");
+const { response } = require('express');
+
+const gateway = new braintree.BraintreeGateway({
+    environment: braintree.Environment.Sandbox,
+    merchantId: process.env.BRAINTREE_MERCHANT_ID,
+
+
+    publicKey: process.env.BRAINTREE_PUBLIC_KEY,
+    privateKey: process.env.BRAINTREE_PRIVATE_KEY
+});
 
 const createProduct = async (req, res) => {
     try {
@@ -99,6 +112,7 @@ const getProdPhoto = async (req, res) => {
         if (prodPhoto.photo.data) {
             res.set('Content-type', prodPhoto.photo.contentType);
             return res.status(200).send(prodPhoto.photo.data)
+
         }
 
     } catch (error) {
@@ -109,6 +123,27 @@ const getProdPhoto = async (req, res) => {
         })
     }
 };
+
+// const getProdPhoto = async (req, res) => {
+//     try {
+//         const prodPhoto = await Product.findById(req.params.pid).select('photo');
+
+//         if (prodPhoto.photo.data) {
+
+//             // res.set('Content-type', prodPhoto.photo.contentType);
+//             // console.log(prodPhoto.photo.data)
+//             // return res.status(200).send(prodPhoto.photo.data)
+//             console.log(prodPhoto.photo.data);
+//         }
+
+//     } catch (error) {
+//         console.log("Error Error")
+//         console.error(error)
+//         res.status(500).send({
+//             error: "photo fetch unsuccess",
+//         })
+//     }
+// }
 
 //delete prod
 const deleteProduct = async (req, res, next) => {
@@ -199,4 +234,68 @@ const getRelatedProducts = async (req, res) => {
 
     }
 }
-module.exports = { createProduct, getAllProd, getSingleProd, getProdPhoto, deleteProduct, productFilter, productPagination, getRelatedProducts };
+
+//controllers for payment gateway
+
+const braintreeTokenController = (req, res) => {
+    try {
+
+
+
+        gateway.clientToken.generate({}, function (err, response) {
+            if (err) {
+                res.status(500).send(err);
+            } else {
+                res.send(response);
+            }
+        });
+
+
+
+    } catch (error) {
+        console.log(error.message);
+
+    }
+
+};
+
+//payment controller
+const braintreePaymentController = (req, res) => {
+    try {
+        let total = 0;
+        const { cartItem, nonce } = req.body;
+        cartItem.map(i => total += i.price);
+
+        let transaction = gateway.transaction.sale({
+            amount: total,
+            paymentMethodNonce: nonce,
+            options: {
+                submitForSettlement: true
+            }
+        },
+            (err, result) => {
+                if (result) {
+                    const order = new Order({
+                        products: cartItem,
+                        payment: result,
+                        buyer: req.user.id,
+
+                    }).save();
+                    res.json({
+                        ok: true
+                    })
+
+                }
+                else {
+                    res.status(500).send(err);
+                }
+            });
+
+
+    } catch (error) {
+        console.log(error);
+
+    }
+
+}
+module.exports = { createProduct, getAllProd, getSingleProd, getProdPhoto, deleteProduct, productFilter, productPagination, getRelatedProducts, braintreeTokenController, braintreePaymentController };

@@ -4,10 +4,15 @@ import Wrapper from '../../components/Wrapper'
 import CartItem from '../../components/CartItem'
 import { useCart } from '../../context/cart'
 import Empty from '../../utils/empty.jpg';
+import { NavLink } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
+
+
 
 
 const Cart = () => {
     const [cartItem] = useCart();
+    // const navigate = useNavigate();
 
     const totalPrice = () => {
         let total = 0;
@@ -28,10 +33,11 @@ const Cart = () => {
                         }
 
                     </div>
-                    <div className='flex justify-between my-5'>
+                    <div className='flex flex-col md:justify-between my-5 items-center'>
                         <p className='text-[24px] capitalize text-gray-700'>total price</p>
                         <span className='text-lg text-green-700 font-semibold'>${totalPrice()}</span>
-                        <button className='p-2 bg-orange-500 rounded-lg font-semibold text-white '>CheckOut</button>
+                        <NavLink to='/dashboard/user/checkout' ><button className='p-2 bg-orange-500 rounded-lg font-semibold text-white ' > Proceed To CheckOut</button>
+                        </NavLink>
 
                     </div>
                 </Wrapper>

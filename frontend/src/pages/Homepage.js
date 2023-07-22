@@ -94,15 +94,15 @@ const Homepage = () => {
                         )
                     }
                     <Wrapper>
-                        <div className='flex justify-between mb-6'>
+                        <div className='flex flex-col md:justify-between md:flex-row mb-6 gap-6'>
                             <span className='block text-[28px] font-semibold after:border-b-4 after:border-black '>Hot Products</span>
-                            <span onClick={() => setSideMenu(true)} className=' flex gap-2 cursor-pointer bg-white shadow-lg p-2 text-gray-500 hover:bg-black hover:text-white duration-150 rounded-lg'>
+                            <span onClick={() => setSideMenu(true)} className='max-w-[100px] flex gap-2 cursor-pointer bg-white shadow-lg p-2 text-gray-500 hover:bg-black hover:text-white duration-150 rounded-lg'>
                                 <FilterListIcon />
-                                <p className='text=[18px] font-semibold font-sans'>Filters</p>
+                                <p className='text=[18px] font-semibold font-sans '>Filters</p>
 
                             </span>
                         </div>
-                        <div className='grid grid-cols-4 gap-8'>
+                        <div className='grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-8'>
                             {
                                 products?.map((p) => (
                                     <Product p={p} />

@@ -13,7 +13,7 @@ import { useCart } from '../../context/cart'
 
 
 const Header = () => {
-  const [cartItem] = useCart();
+  const [cartItem, setCartItem] = useCart();
   const [showDash, setShowDash] = useState(false);
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
@@ -21,10 +21,13 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('auth');
+    localStorage.removeItem('cart');
     setAuth({
       user: null,
       token: ''
     })
+    setCartItem('');
+
     navigate('/');
 
   }

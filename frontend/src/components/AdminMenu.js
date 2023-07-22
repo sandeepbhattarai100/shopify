@@ -16,6 +16,7 @@ const AdminMenu = () => {
                     <NavLink to='/dashboard/admin/create-category'> <li className='px-3 py-2 cursor-pointer hover:bg-slate-50 mt-1 capitalize hover:scale-105 font-sans border-b-2'>create Category</li></NavLink>
                     <NavLink to='/dashboard/admin/user'> <li className='px-3 py-2 cursor-pointer hover:bg-slate-50 mt-1 capitalize hover:scale-105 font-sans border-b-2'>users</li></NavLink>
                     <NavLink to='/dashboard/admin/analytics'> <li className='px-3 py-2 cursor-pointer hover:bg-slate-50 mt-1 capitalize hover:scale-105 font-sans border-b-2'>analytics</li></NavLink>
+                    <NavLink to='/dashboard/admin/order'> <li className='px-3 py-2 cursor-pointer hover:bg-slate-50 mt-1 capitalize hover:scale-105 font-sans border-b-2'>Orders</li></NavLink>
 
                 </ul>
             </div>

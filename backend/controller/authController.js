@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const { hashPassword, comparePassword } = require('../helper/authHelper');
 const jwt = require('jsonwebtoken');
+const Order = require('../models/orderModels');
 
 
 const registerController = async (req, res) => {
@@ -89,7 +90,8 @@ const loginController = async (req, res) => {
                 name: user.name,
                 phone: user.phone,
                 address: user.address,
-                role: user.role
+                role: user.role,
+                email: user.email,
             },
             token
 
@@ -148,4 +150,26 @@ const forgotPassword = async (req, res) => {
 
     }
 };
-module.exports = { registerController, loginController, test, forgotPassword };
+
+const getOrders = async (req, res) => {
+    console.log(req.user.id);
+    try {
+        const orders = await Order.find({
+            buyer: req.user.id
+        }).populate('products', '-photo').sort({ createdAt: "-1" });
+        res.json(orders);
+
+    } catch (error) {
+        res.send(error);
+
+    }
+}
+
+//getallordersadmin
+const getAllOrders = async (req, res) => {
+    // const allOrders = await Order.find({}).populate("products", "-photo").populate("buyer", "name").sort({ createdAt: '-1' });
+    const allOrders = await Order.find({}).populate("products", "-photo").populate("buyer", "name").sort({createdAt:"-1"});
+    console.log(allOrders);
+    res.json(allOrders);
+}
+module.exports = { registerController, loginController, test, forgotPassword, getOrders, getAllOrders };

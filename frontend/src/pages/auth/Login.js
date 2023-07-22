@@ -35,7 +35,7 @@ const Login = () => {
                 })
                 window.localStorage.setItem('auth', JSON.stringify(res.data), 'true');
                 navigate(location.state || '/');
-                console.log(`user is ${auth.user}`);
+                // console.log(`user is ${auth.user}`);
             }
             else {
                 window.alert("wrong email or password entered");
